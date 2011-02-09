@@ -84,11 +84,10 @@ module Rails
       def load_rubygems
         min_version = '1.3.2'
         require 'rubygems'
-        # Server is lying.
-        # unless rubygems_version >= min_version
-        #   $stderr.puts %Q(Rails requires RubyGems >= #{min_version} (you have #{rubygems_version}). Please `gem update --system` and try again.)
-        #   exit 1
-        # end
+        unless rubygems_version >= min_version
+          $stderr.puts %Q(Rails requires RubyGems >= #{min_version} (you have #{rubygems_version}). Please `gem update --system` and try again.)
+          exit 1
+        end
 
       rescue LoadError
         $stderr.puts %Q(Rails requires RubyGems >= #{min_version}. Please install RubyGems and try again: http://rubygems.rubyforge.org)
@@ -106,6 +105,23 @@ module Rails
     end
   end
 end
+
+# add this to the bottom of config/boot.rb, before the line `Rails.boot!`
+ 
+class Rails::Boot
+  def run
+    load_initializer
+
+    Rails::Initializer.class_eval do
+      def load_gems
+        @bundler_loaded ||= Bundler.require :default, Rails.env
+      end
+
+      Rails::Initializer.run(:set_load_path)
+    end
+  end
+end
+
 
 # All that for this:
 Rails.boot!
