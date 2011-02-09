@@ -4,8 +4,8 @@ describe Payload do
   it "builds a new payload" do
     hash = JSON.parse(<<-PAYLOAD
 {
-  "after": "111e836556bf4247cdf929b5f069041dc5348399", 
-  "before": "241e393f5e38a8fe7891a6db46680b466f58c9ed", 
+  "after": "25106659560d4eadad9622f4b3be77870e51b6fc",
+  "before": "111e836556bf4247cdf929b5f069041dc5348399",
   "commits": [
     {
       "added": [], 
