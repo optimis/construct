@@ -34,12 +34,6 @@ ActiveRecord::Schema.define(:version => 20100114062540) do
     t.text     "run_errors",   :limit => 16777215
   end
 
-  create_table "channels", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "commits", :force => true do |t|
     t.integer  "project_id"
     t.string   "sha"
@@ -68,21 +62,9 @@ ActiveRecord::Schema.define(:version => 20100114062540) do
     t.datetime "updated_at"
   end
 
-  create_table "messages", :force => true do |t|
-    t.string   "text"
-    t.integer  "channel_id"
-    t.integer  "person_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "people", :force => true do |t|
-    t.string  "name"
-    t.string  "email"
-    t.boolean "authorized", :default => false
-    t.string  "nick"
-    t.string  "password"
-    t.boolean "admin",      :default => false
+    t.string "name"
+    t.string "email"
   end
 
   create_table "projects", :force => true do |t|
@@ -96,12 +78,5 @@ ActiveRecord::Schema.define(:version => 20100114062540) do
   end
 
   add_index "projects", ["permalink"], :name => "index_projects_on_permalink"
-
-  create_table "tips", :force => true do |t|
-    t.string  "command"
-    t.string  "description"
-    t.text    "text"
-    t.integer "user_id"
-  end
 
 end
